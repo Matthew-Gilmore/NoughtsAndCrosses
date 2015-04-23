@@ -2,21 +2,29 @@ var app = angular.module("MainApp", [] );
 
 app.controller("MainController", function($http, $scope) {
 
-    $scope.startNewGame = function(p1State, p2State) {
+    var currentPlayer = 0;
+    var p1State = 'human';
+    var p2State = 'random';
+
+    $scope.startNewGame = function() {
         $http.post("http://noughtsandcrosses:35000/api/v1.0/newgame", {player1: p1State, player2: p2State}, {withCredentials: true})
             .success(function(data, status, headers, config) {
                 //alert(data.gameboard);
                 //alert(data.outcome);
 
                 if ((p1State === 'random' || p1State === 'pre-trained') && (p2State === 'random' || p2State === 'pre-trained')) {
-                    alert(data.winner);
+                    populateBoard(data.gameboard);
+                    alert("A winner is Player " + data.winner + "!");
                 }
 
                 if (p1State === 'human') {
+                    currentPlayer = 1;
                     $scope.chooseMove();
                 }
+                else {
+                    currentPlayer = 2;
+                }
 
-                populateBoard(data.gameboard);
             })
             .error(function(data, status, headers, config) {
                 alert("Something went wrong.");
@@ -24,14 +32,26 @@ app.controller("MainController", function($http, $scope) {
             });
     };
 
-    $scope.makeMove = function(pNumber, square) {
-        $http.post("http://noughtsandcrosses:35000/api/v1.0/makemove", {playerNumber: pNumber, chosenSquare: square}, {withCredentials: true})
+    $scope.makeMove = function(square) {
+        $http.post("http://noughtsandcrosses:35000/api/v1.0/makemove", {playerNumber: currentPlayer, chosenSquare: square}, {withCredentials: true})
             .success(function(data, status, headers, config) {
-                alert("Successful move");
                 populateBoard(data.gameboard);
+
+                if (currentPlayer === 1 && p2State === 'human') {
+                    currentPlayer = 2;
+                }
+                else if (currentPlayer === 2 && p1State === 'human') {
+                    currentPlayer = 1;
+                }
+
+                if (data.outcome === 'Win') {
+                    alert("A winner is Player " + data.winner + "!");
+                }
+                else if (data.outcome === 'Draw') {
+                    alert("It's a tie!");
+                }
             })
             .error(function(data, status, headers, config) {
-                alert("Something went wrong.");
                 alert(data);
             });
     };
@@ -44,13 +64,12 @@ app.controller("MainController", function($http, $scope) {
 
             switch(boardData[i]) {
                 case '0':
-                    $scope.board[i] = "";
                     break;
                 case '1':
-                    $scope.board[i] = "X";
+                    document.getElementsByClassName("boardSquare")[i].classList.add("cross");
                     break;
                 case '2':
-                    $scope.board[i] = "O";
+                    document.getElementsByClassName("boardSquare")[i].classList.add("nought");
                     break;
             }
         }
@@ -59,19 +78,13 @@ app.controller("MainController", function($http, $scope) {
 
     $scope.chooseMove = function() {
 
-        var pNumber = prompt("Please enter your player number.");
-
-        while (!(pNumber === '1' || pNumber === '2')) {
-            pNumber = prompt("Sorry, that's not a valid player number. Please enter either 1 or 2.");
-        }
-
         var square = prompt("Which square would you like to fill in?");
 
         while (square < 0 || square > 8) {
             square = prompt("Sorry, that's not a valid square. Please enter a number between 0 and 8.");
         }
 
-        $scope.makeMove(pNumber, square);
+        $scope.makeMove(square);
     };
 
 

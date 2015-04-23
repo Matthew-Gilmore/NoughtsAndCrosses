@@ -8,27 +8,25 @@
 <body ng-controller="MainController">
     <table>
         <tr>
-            <td>{{board[0]}}</td>
-            <td>{{board[1]}}</td>
-            <td>{{board[2]}}</td>
+            <td class="boardSquare" ng-click="makeMove(0)"></td>
+            <td class="boardSquare" ng-click="makeMove(1)"></td>
+            <td class="boardSquare" ng-click="makeMove(2)"></td>
         </tr>
 
         <tr>
-            <td>{{board[3]}}</td>
-            <td>{{board[4]}}</td>
-            <td>{{board[5]}}</td>
+            <td class="boardSquare" ng-click="makeMove(3)"></td>
+            <td class="boardSquare" ng-click="makeMove(4)"></td>
+            <td class="boardSquare" ng-click="makeMove(5)"></td>
         </tr>
 
         <tr>
-            <td>{{board[6]}}</td>
-            <td>{{board[7]}}</td>
-            <td>{{board[8]}}</td>
+            <td class="boardSquare" ng-click="makeMove(6)"></td>
+            <td class="boardSquare" ng-click="makeMove(7)"></td>
+            <td class="boardSquare" ng-click="makeMove(8)"></td>
         </tr>
     </table>
 
-    <button ng-click="startNewGame('random', 'random')">Play Random</button>
-    <button ng-click="startNewGame('human', 'random')">Play</button>
-    <button ng-click="chooseMove()">Make Move</button>
+    <button ng-click="startNewGame()">Play</button>
 
     <script src="../../node_modules/angular/angular.min.js"></script>
     <script src="scripts/MainController.js"></script>
