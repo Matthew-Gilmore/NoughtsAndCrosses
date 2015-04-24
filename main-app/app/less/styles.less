@@ -1,0 +1,24 @@
+@squareWidth: 50px;
+@squareHeight: 50px;
+
+table {
+  position: relative;
+  left: 40%;
+}
+
+.boardSquare {
+  border: solid black 2px;
+  text-align: center;
+  width: @squareWidth;
+  height: @squareHeight;
+}
+
+.nought {
+  background: url("../images/nought.png") 0 0;
+  background-size: (@squareWidth + 1) (@squareHeight + 1);
+}
+
+.cross {
+  background: url("../images/cross.png") 0 0;
+  background-size: (@squareWidth + 1) (@squareHeight + 1);
+}

@@ -1,11 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="MainApp">
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Noughts And Crosses</title>
+    <link rel="stylesheet/less" type = "text/css" href="less/styles.less">
 </head>
-<body>
+<body ng-controller="MainController">
+    <table>
+        <tr>
+            <td class="boardSquare" ng-click="makeMove(0)"></td>
+            <td class="boardSquare" ng-click="makeMove(1)"></td>
+            <td class="boardSquare" ng-click="makeMove(2)"></td>
+        </tr>
 
-    <script src="../../node_modules/angular/angular.js"></script>
+        <tr>
+            <td class="boardSquare" ng-click="makeMove(3)"></td>
+            <td class="boardSquare" ng-click="makeMove(4)"></td>
+            <td class="boardSquare" ng-click="makeMove(5)"></td>
+        </tr>
+
+        <tr>
+            <td class="boardSquare" ng-click="makeMove(6)"></td>
+            <td class="boardSquare" ng-click="makeMove(7)"></td>
+            <td class="boardSquare" ng-click="makeMove(8)"></td>
+        </tr>
+    </table>
+
+    <button ng-click="startNewGame()">Play</button>
+
+    <script src="../../node_modules/angular/angular.min.js"></script>
+    <script src="scripts/MainController.js"></script>
+    <script src="../../node_modules/less/dist/less.min.js"></script>
 </body>
 </html>
