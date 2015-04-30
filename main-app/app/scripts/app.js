@@ -1,15 +1,19 @@
 (function() {
-    var app = angular.module("MainApp", ['ngRoute']);
-
-    app.config(['$routeProvider', function ($routeProvider) {
-
-        $routeProvider
-            .when('/Users/matthew.gilmore/NoughtsAndCrosses/main-app/app/settings.html', {
-                templateUrl: "../app/settings.html"
-            })
-            .otherwise({
-                redirectTo: '/'
-            });
-
+    'use strict';
+    angular.module("MainApp")
+        .config(['$routeProvider', function ($routeProvider) {
+            $routeProvider
+                .when('/startup', {
+                    templateUrl: "partials/startup.html"
+                })
+                .when('/gameBoard', {
+                    templateUrl: "partials/gameBoard.html"
+                })
+                .when('/settings', {
+                    templateUrl: "partials/settings.html"
+                })
+                .otherwise({
+                    redirectTo: 'startup'
+                });
     }]);
 }());

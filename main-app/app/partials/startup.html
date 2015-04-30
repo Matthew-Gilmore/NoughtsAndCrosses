@@ -1,0 +1,22 @@
+<head lang="en">
+    <title>Start Page</title>
+</head>
+<body>
+
+    <div>
+        <div class="playerBlock">
+            <img class ="playerImage" src="images/mario.png">
+            <h2>Player 1</h2>
+            <h2 class="playerState" ng-click="model.changePlayerState(1)">Human</h2>
+        </div>
+
+        <div class="playerBlock">
+            <img class="playerImage" src="images/mario.png">
+            <h2>Player 2</h2>
+            <h2 class="playerState" ng-click="model.changePlayerState(2)">Human</h2>
+        </div>
+
+        <button ng-click="model.goAndUpdatePlayers('gameBoard')">Play</button>
+    </div>
+
+</body>

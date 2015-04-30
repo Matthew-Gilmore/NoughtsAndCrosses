@@ -1,6 +1,9 @@
 @squareWidth: 100px;
 @squareHeight: 100px;
 
+@playerWidth: 200px;
+@playerHeight: 200px;
+
 table {
   position: relative;
   left: 40%;
@@ -14,11 +17,34 @@ table {
 }
 
 .nought {
-  background: url("../images/noughtAndCrossSheet.png") 101px 0;
+  background: url("../images/noughtAndCrossSheet.png") @squareWidth 0;
   background-size: @squareWidth*2 @squareHeight;
 }
 
 .cross {
   background: url("../images/noughtAndCrossSheet.png") 0 0;
   background-size: @squareWidth*2 @squareHeight;
+}
+
+.playerBlock {
+  display: inline-block;
+
+  h2 {
+    text-align: center;
+  }
+}
+
+.human {
+  background: url("../images/mario.png") 0 0;
+  background-size: @playerWidth @playerHeight;
+}
+
+.random {
+  background: url("../images/bowser.png") 0 0;
+  background-size: @playerWidth @playerHeight;
+}
+
+.trained {
+  background: url("../images/rob.png") 0 0;
+  background-size: @playerWidth @playerHeight;
 }
