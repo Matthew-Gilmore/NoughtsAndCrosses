@@ -1,9 +1,9 @@
 (function () {
     'use strict';
     angular.module("MainApp")
-        .factory("NAndCModel", ['$http', '$location', function($http, $location) {
+        .factory("GameModel", ['$http', '$location', function($http, $location) {
 
-            var NAndCModel = function() {
+            var GameModel = function() {
 
                 var me = this;
                 this.currentPlayer = 0;
@@ -160,6 +160,6 @@
                 };
             };
 
-            return new NAndCModel();
+            return new GameModel();
         }]);
 })();

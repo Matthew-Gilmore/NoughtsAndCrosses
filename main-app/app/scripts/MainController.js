@@ -1,9 +1,9 @@
 (function() {
     'use strict';
     angular.module("MainApp")
-        .controller("MainController", [ '$http', '$scope', '$location', 'NAndCModel', function($http, $scope, $location, NAndCModel) {
+        .controller("MainController", ['$scope', 'GameModel', function($scope, GameModel) {
 
-            $scope.model = NAndCModel;
+            $scope.model = GameModel;
 
         }]);
 }());
