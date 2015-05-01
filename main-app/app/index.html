@@ -1,35 +1,20 @@
 <!DOCTYPE html>
 <html ng-app="MainApp">
 <head lang="en">
-    <meta charset="UTF-8">
     <title>Noughts And Crosses</title>
     <link rel="stylesheet/less" type = "text/css" href="less/styles.less">
 </head>
 <body ng-controller="MainController">
-    <table>
-        <tr>
-            <td class="boardSquare" ng-click="makeMove(0)"></td>
-            <td class="boardSquare" ng-click="makeMove(1)"></td>
-            <td class="boardSquare" ng-click="makeMove(2)"></td>
-        </tr>
 
-        <tr>
-            <td class="boardSquare" ng-click="makeMove(3)"></td>
-            <td class="boardSquare" ng-click="makeMove(4)"></td>
-            <td class="boardSquare" ng-click="makeMove(5)"></td>
-        </tr>
+    <div ng-view=""></div>
 
-        <tr>
-            <td class="boardSquare" ng-click="makeMove(6)"></td>
-            <td class="boardSquare" ng-click="makeMove(7)"></td>
-            <td class="boardSquare" ng-click="makeMove(8)"></td>
-        </tr>
-    </table>
-
-    <button ng-click="startNewGame()">Play</button>
-
-    <script src="../../node_modules/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../../bower_components/angular-route/angular-route.min.js"></script>
+    <script src="scripts/modules.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/providers/model/game-model.js"></script>
     <script src="scripts/MainController.js"></script>
     <script src="../../node_modules/less/dist/less.min.js"></script>
+
 </body>
 </html>

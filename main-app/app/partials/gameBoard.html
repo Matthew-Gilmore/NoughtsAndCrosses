@@ -1,0 +1,26 @@
+<table>
+    <tr>
+        <td class="boardSquare" ng-click="model.makeMove(0)"></td>
+        <td class="boardSquare" ng-click="model.makeMove(1)"></td>
+        <td class="boardSquare" ng-click="model.makeMove(2)"></td>
+    </tr>
+
+    <tr>
+        <td class="boardSquare" ng-click="model.makeMove(3)"></td>
+        <td class="boardSquare" ng-click="model.makeMove(4)"></td>
+        <td class="boardSquare" ng-click="model.makeMove(5)"></td>
+    </tr>
+
+    <tr>
+        <td class="boardSquare" ng-click="model.makeMove(6)"></td>
+        <td class="boardSquare" ng-click="model.makeMove(7)"></td>
+        <td class="boardSquare" ng-click="model.makeMove(8)"></td>
+    </tr>
+</table>
+
+<h2 ng-show = "model.gameActive">Player {{model.currentPlayer}}, it's your turn! Click on a square to make your move.</h2>
+
+<button ng-click="model.startNewGame()">Start New Game</button>
+<button ng-click="model.go('settings')">Settings</button>
+<button ng-click="model.go('startup')">Change Players</button>
+<button ng-click="model.clearBoard()">Clear Board</button>
