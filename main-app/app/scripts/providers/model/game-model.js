@@ -1,124 +1,51 @@
 (function () {
     'use strict';
-    angular.module("MainApp")
-        .factory("GameModel", ['$http', '$location', function($http, $location) {
+    angular.module("Game.Model")
+        .factory("GameModel", ['$location', 'Proxy', function($location, proxy) {
 
             var GameModel = function() {
 
-                var me = this;
-                this.currentPlayer = 0;
-                var p1State = 'human';
-                var p2State = 'human';
+                this.gameActive = function() {
 
-                this.gameActive = false;
+                    return proxy.gameActive;
+                };
 
-                this.board = [];
+                this.currentPlayer = function() {
+
+                    if (proxy.currentPlayer === 1) {
+                        return proxy.p1Name;
+                    }
+                    else if(proxy.currentPlayer === 2) {
+                        return proxy.p2Name;
+                    }
+                };
 
                 this.startNewGame = function() {
 
-                    $http.post("http://noughtsandcrosses:35000/api/v1.0/newgame", {player1: p1State, player2: p2State}, {withCredentials: true})
-                        .success(function(data, status, headers, config) {
-
-                            me.clearBoard();
-                            populateBoard(data.gameboard);
-
-                            if ((p1State === 'random' || p1State === 'pre-trained') && (p2State === 'random' || p2State === 'pre-trained')) {
-
-                                if (data.outcome === 'Win') {
-                                    alert("A winner is Player " + data.winner + "!");
-                                }
-                                else {
-                                    alert("It's a tie!");
-                                }
-                            }
-                            else {
-                                me.gameActive = true;
-                            }
-
-                            if (p1State === 'human') {
-                                me.currentPlayer = 1;
-                            }
-                            else {
-                                me.currentPlayer = 2;
-                            }
-
-                        })
-                        .error(function(data, status, headers, config) {
-                            alert("Something went wrong.");
-                            alert(data);
-                        });
+                    return proxy.startNewGame();
                 };
 
                 this.makeMove = function(square) {
 
-                    if ((this.board[square] !== '1') && (this.board[square] !== '2') && (this.gameActive)) {
-
-                        $http.post("http://noughtsandcrosses:35000/api/v1.0/makemove",
-                            {playerNumber: this.currentPlayer, chosenSquare: square}, {withCredentials: true})
-                            .success(function (data, status, headers, config) {
-                                populateBoard(data.gameboard);
-
-                                if (me.currentPlayer === 1 && p2State === 'human') {
-                                    me.currentPlayer = 2;
-                                }
-                                else
-                                if (me.currentPlayer === 2 && p1State === 'human') {
-                                    me.currentPlayer = 1;
-                                }
-
-                                if (data.outcome === 'Win') {
-                                    alert("A winner is Player " + data.winner + "!");
-                                    me.gameActive = false;
-                                }
-                                else if (data.outcome === 'Draw') {
-                                    alert("It's a tie!");
-                                    me.gameActive = false;
-                                }
-                            })
-                            .error(function (data, status, headers, config) {
-                                alert(data);
-                            });
-                    }
-                };
-
-                var populateBoard = function(boardData) {
-
-                    me.board = boardData;
-
-                    for(var i=0;i<boardData.length;i++) {
-
-                        switch(boardData[i]) {
-                            case '0':
-                                document.getElementsByClassName("boardSquare")[i].classList.remove("nought");
-                                document.getElementsByClassName("boardSquare")[i].classList.remove("cross");
-                                break;
-                            case '1':
-                                document.getElementsByClassName("boardSquare")[i].classList.add("cross");
-                                break;
-                            case '2':
-                                document.getElementsByClassName("boardSquare")[i].classList.add("nought");
-                                break;
-                        }
-                    }
-
+                    return proxy.makeMove(square);
                 };
 
                 this.clearBoard = function() {
 
-                    populateBoard("000000000");
+                    return proxy.clearBoard();
                 };
 
                 this.go = function(path) {
 
-                    p1State = 'human';
-                    p2State = 'human';
+                    proxy.p1State = 'human';
+                    proxy.p2State = 'human';
                     $location.path(path);
                 };
 
                 this.goAndUpdatePlayers = function(path) {
 
-                    p1State = document.getElementsByClassName("playerState")[0].innerHTML.toLowerCase();
-                    p2State = document.getElementsByClassName("playerState")[1].innerHTML.toLowerCase();
+                    proxy.p1State = document.getElementsByClassName("playerState")[0].innerHTML.toLowerCase();
+                    proxy.p2State = document.getElementsByClassName("playerState")[1].innerHTML.toLowerCase();
 
                     $location.path(path);
                 };
@@ -127,11 +54,11 @@
 
                     if (playerNumber === 1) {
 
-                        p1State = changePlayerImage(playerNumber, p1State);
+                        proxy.p1State = changePlayerImage(playerNumber, proxy.p1State);
                     }
                     else if (playerNumber === 2) {
 
-                        p2State = changePlayerImage(playerNumber, p2State);
+                        proxy.p2State = changePlayerImage(playerNumber, proxy.p2State);
                     }
                 };
 
@@ -157,6 +84,18 @@
                     }
 
                     return playerState;
+                };
+
+                this.updateSettings = function(p1Name, p2Name) {
+
+                    if (p1Name != null) {
+                        proxy.p1Name = p1Name;
+                    }
+
+                    if (p2Name != null) {
+                        proxy.p2Name = p2Name;
+                    }
+
                 };
             };
 

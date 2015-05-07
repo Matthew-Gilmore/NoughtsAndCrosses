@@ -18,7 +18,7 @@
     </tr>
 </table>
 
-<h2 ng-show = "model.gameActive">Player {{model.currentPlayer}}, it's your turn! Click on a square to make your move.</h2>
+<h2 ng-show = "model.gameActive()">{{model.currentPlayer()}}, it's your turn! Click on a square to make your move.</h2>
 
 <button ng-click="model.startNewGame()">Start New Game</button>
 <button ng-click="model.go('settings')">Settings</button>
