@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    angular.module("MainApp")
+    angular.module("Game")
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/startup', {

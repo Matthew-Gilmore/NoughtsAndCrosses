@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    angular.module("MainApp")
+    angular.module("Game")
         .controller("MainController", ['$scope', 'GameModel', function($scope, GameModel) {
 
             $scope.model = GameModel;

@@ -1,11 +1,31 @@
-<html>
 <head lang="en">
-    <meta charset="UTF-8">
     <title>Settings</title>
 </head>
 <body>
     <h1><b>Settings</b></h1>
 
-    <h2></h2>
+    <ul>
+        <li>
+            <label for="p1Name">Player 1 Name: </label> <input type="text" id="p1Name" ng-model="p1Name">
+        </li>
+        <li>
+            <label for="p2Name">Player 2 Name: </label> <input type="text" id="p2Name" ng-model="p2Name">
+        </li>
+
+        <li>
+            <h2>Should Player 1 use Noughts or Crosses?</h2>
+            <input type="radio" name="symbolOption" value="nought" id="p1NoughtOption" checked> <label for="p1NoughtOption">Noughts</label>
+            <input type="radio" name="symbolOption" value="cross" id="p1CrossOption"> <label for="p1CrossOption">Crosses</label>
+        </li>
+
+        <li>
+            <h2>Sound:</h2>
+            <input type="radio" name="soundOption" value="on" id="soundOnOption" checked> <label for="soundOnOption">On</label>
+            <input type="radio" name="soundOption" value="off" id="soundOffOption"> <label for="soundOffOption">Off</label>
+        </li>
+
+    </ul>
+
+    <button ng-click="model.updateSettings(p1Name, p2Name)">Save Settings</button>
+    <button ng-click="model.go('gameBoard')">Back</button>
 </body>
-</html>
