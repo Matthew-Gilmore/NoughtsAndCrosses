@@ -14,18 +14,18 @@
 
         <li>
             <h2>Should Player 1 use Noughts or Crosses?</h2>
-            <input type="radio" name="symbolOption" value="nought" id="p1NoughtOption" checked> <label for="p1NoughtOption">Noughts</label>
-            <input type="radio" name="symbolOption" value="cross" id="p1CrossOption"> <label for="p1CrossOption">Crosses</label>
+            <input type="radio" name="symbolOption" ng-model="symbolOption" value="nought" ng-checked="model.p1Symbol() ==='nought'" id="p1NoughtOption"> <label for="p1NoughtOption">Noughts</label>
+            <input type="radio" name="symbolOption" ng-model="symbolOption" value="cross" ng-checked="model.p1Symbol() === 'cross'" id="p1CrossOption"> <label for="p1CrossOption">Crosses</label>
         </li>
 
         <li>
             <h2>Sound:</h2>
-            <input type="radio" name="soundOption" value="on" id="soundOnOption" checked> <label for="soundOnOption">On</label>
-            <input type="radio" name="soundOption" value="off" id="soundOffOption"> <label for="soundOffOption">Off</label>
+            <input type="radio" name="soundOption" ng-model="soundOption" value="true" ng-checked="model.soundOn()" id="soundOnOption"> <label for="soundOnOption">On</label>
+            <input type="radio" name="soundOption" ng-model="soundOption" value="false" ng-checked="!model.soundOn()" id="soundOffOption"> <label for="soundOffOption">Off</label>
         </li>
 
     </ul>
 
-    <button ng-click="model.updateSettings(p1Name, p2Name)">Save Settings</button>
-    <button ng-click="model.go('gameBoard')">Back</button>
+    <button ng-click="model.updateSettings(p1Name, p2Name, symbolOption, soundOption)">Save Settings</button>
+    <button ng-click="model.go('gameBoard', false, false)">Back</button>
 </body>

@@ -4,18 +4,27 @@
         .factory('Proxy', ['$http', function($http) {
 
             var GameProxy = function() {
+
                 var me = this;
+
                 me.currentPlayer = 0;
+
                 me.p1State = 'human';
                 me.p2State = 'human';
+
                 me.p1Name = 'Player 1';
                 me.p2Name = 'Player 2';
+
+                me.p1Symbol = 'nought';
+                me.p2Symbol = 'cross';
+
+                me.soundOn = false;
 
                 me.gameActive = false;
 
                 me.board = [];
 
-                this.startNewGame = function () {
+                me.startNewGame = function () {
 
                     $http.post("http://noughtsandcrosses:35000/api/v1.0/newgame", {
                         player1: me.p1State,
@@ -24,7 +33,7 @@
                         .success(function (data, status, headers, config) {
 
                             me.clearBoard();
-                            populateBoard(data.gameboard);
+                            me.populateBoard(data.gameboard);
 
                             if ((me.p1State === 'random' || me.p1State === 'pre-trained') && (me.p2State === 'random' || me.p2State === 'pre-trained')) {
 
@@ -53,14 +62,14 @@
                         });
                 };
 
-                this.makeMove = function (square) {
+                me.makeMove = function (square) {
 
                     if ((me.board[square] !== '1') && (me.board[square] !== '2') && (me.gameActive)) {
 
                         $http.post("http://noughtsandcrosses:35000/api/v1.0/makemove",
                             {playerNumber: me.currentPlayer, chosenSquare: square}, {withCredentials: true})
                             .success(function (data, status, headers, config) {
-                                populateBoard(data.gameboard);
+                                me.populateBoard(data.gameboard);
 
                                 if (me.currentPlayer === 1 && me.p2State === 'human') {
                                     me.currentPlayer = 2;
@@ -89,7 +98,7 @@
                     }
                 };
 
-                var populateBoard = function (boardData) {
+                me.populateBoard = function (boardData) {
 
                     me.board = boardData;
 
@@ -101,20 +110,22 @@
                                 document.getElementsByClassName("boardSquare")[i].classList.remove("cross");
                                 break;
                             case '1':
-                                document.getElementsByClassName("boardSquare")[i].classList.add("cross");
+                                document.getElementsByClassName("boardSquare")[i].classList.add(me.p1Symbol);
                                 break;
                             case '2':
-                                document.getElementsByClassName("boardSquare")[i].classList.add("nought");
+                                document.getElementsByClassName("boardSquare")[i].classList.add(me.p2Symbol);
                                 break;
                         }
                     }
 
                 };
 
-                this.clearBoard = function () {
+                me.clearBoard = function () {
 
-                    populateBoard("000000000");
+                    me.populateBoard("000000000");
                 };
+
+                me.populateBoard(me.board);
             };
 
             return new GameProxy();
