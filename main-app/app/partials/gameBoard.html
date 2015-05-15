@@ -21,6 +21,8 @@
 <h2 ng-show = "model.gameActive()">{{model.currentPlayer()}}, it's your turn! Click on a square to make your move.</h2>
 
 <button ng-click="model.startNewGame()">Start New Game</button>
-<button ng-click="model.go('settings')">Settings</button>
-<button ng-click="model.go('startup')">Change Players</button>
+<button ng-click="model.leavePageConfirm('settings', false)">Settings</button>
+<button ng-click="model.leavePageConfirm('startup', true)">Change Players</button>
 <button ng-click="model.clearBoard()">Clear Board</button>
+
+<h2>Sound: {{model.soundOn()}}</h2>

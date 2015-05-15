@@ -5,12 +5,14 @@
 
             var GameModel = function() {
 
-                this.gameActive = function() {
+                var me = this;
+
+                me.gameActive = function() {
 
                     return proxy.gameActive;
                 };
 
-                this.currentPlayer = function() {
+                me.currentPlayer = function() {
 
                     if (proxy.currentPlayer === 1) {
                         return proxy.p1Name;
@@ -20,37 +22,64 @@
                     }
                 };
 
-                this.startNewGame = function() {
+                me.p1Symbol = function() {
+
+                    return proxy.p1Symbol;
+                };
+
+                me.p2Symbol = function() {
+
+                    return proxy.p2Symbol;
+                };
+
+                me.soundOn = function() {
+
+                    return proxy.soundOn;
+                };
+
+                me.startNewGame = function() {
 
                     return proxy.startNewGame();
                 };
 
-                this.makeMove = function(square) {
+                me.makeMove = function(square) {
 
                     return proxy.makeMove(square);
                 };
 
-                this.clearBoard = function() {
+                me.clearBoard = function() {
 
                     return proxy.clearBoard();
                 };
 
-                this.go = function(path) {
+                me.go = function(path, resetPlayers, clearBoard) {
 
-                    proxy.p1State = 'human';
-                    proxy.p2State = 'human';
-                    $location.path(path);
-                };
+                    if (resetPlayers === true) {
 
-                this.goAndUpdatePlayers = function(path) {
-
-                    proxy.p1State = document.getElementsByClassName("playerState")[0].innerHTML.toLowerCase();
-                    proxy.p2State = document.getElementsByClassName("playerState")[1].innerHTML.toLowerCase();
+                        proxy.p1State = 'human';
+                        proxy.p2State = 'human';
+                    }
 
                     $location.path(path);
+
+                    if (clearBoard === true) {
+
+                        proxy.clearBoard();
+                        proxy.gameActive = false;
+                    }
                 };
 
-                this.changePlayerState = function(playerNumber) {
+                me.leavePageConfirm = function(path, resetPlayers) {
+
+                    var choice = confirm("Navigating away from this page will reset the game. Are you sure you want to continue?");
+
+                    if (choice === true) {
+
+                        me.go(path, resetPlayers, true);
+                    }
+                };
+
+                me.changePlayerState = function(playerNumber) {
 
                     if (playerNumber === 1) {
 
@@ -86,16 +115,36 @@
                     return playerState;
                 };
 
-                this.updateSettings = function(p1Name, p2Name) {
+                me.updateSettings = function(p1Name, p2Name, symbolOption, soundOption) {
 
-                    if (p1Name != null) {
+                    if (p1Name) {
+
                         proxy.p1Name = p1Name;
                     }
 
-                    if (p2Name != null) {
+                    if (p2Name) {
+
                         proxy.p2Name = p2Name;
                     }
 
+                    if (symbolOption) {
+
+                        proxy.p1Symbol = symbolOption;
+
+                        if (proxy.p1Symbol === 'nought') {
+
+                            proxy.p2Symbol = 'cross';
+                        }
+                        else if (proxy.p1Symbol === 'cross') {
+
+                            proxy.p2Symbol = 'nought';
+                        }
+                    }
+
+                    if (soundOption) {
+
+                        proxy.soundOn = (soundOption === 'true');
+                    }
                 };
             };
 
